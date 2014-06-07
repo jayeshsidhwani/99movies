@@ -60,4 +60,4 @@ api.add_resource(MovieListAPI, '/api/{}/movies/'.format(VERSION))
 api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
