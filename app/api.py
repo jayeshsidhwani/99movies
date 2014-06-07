@@ -1,14 +1,10 @@
-# from flask import Flask
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from app import app, api
+
 from flask.ext.restful import reqparse, Resource
-# from flask.ext.pymongo import PyMongo
-
-from movies import Movies
-
-from . import app, api
-
-# app = Flask(__name__)
-# api = Api(app)
-# # db_connection = PyMongo(app)
+from app.utils.movies import Movies
 
 
 class Movie(Resource):
@@ -18,17 +14,16 @@ class Movie(Resource):
         self.arguments = { 'name': str, 'male_lead_actor': str, 'female_lead_actor': str,
                            'supporting_actors': list, 'box_office_ratings': float, 'popularity_score': int }
         self.add_arguments()
-        self.db = DB
 
     def get(self, movie_id):
-        return Movies.get(self.db, movie_id)
-    #
+        return Movies.get(movie_id)
+
     def delete(self, movie_id):
         return Movies.delete(movie_id), 200
 
     def put(self, movie_id):
         args = self.parser.parse_args()
-        movie = Movies.add(self.db, **args)
+        movie = Movies.add(**args)
         return movie, 200
 
     def add_arguments(self):
