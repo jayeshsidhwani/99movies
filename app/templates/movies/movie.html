@@ -5,8 +5,7 @@
     <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Lead Actor (Male)</th>
-        <th>Lead Actor (Female)</th>
+        <th>Genre</th>
         <th>Director</th>
         <th>Popularity</th>
         <th>IMDB Score</th>
@@ -16,27 +15,29 @@
     </thead>
     <tbody>
 
-        <tr>
-            <td> 1 </td>
-            <td>
-                <a href="/movie/{{movie.slug}}">
-                    {{movie.name}}
-                </a>
-            </td>
-            <td>
-                <!--<a href="{{movie.male_lead_actor_slug}}">-->
-                    {{movie.male_lead_actor}}
-                <!--</a>-->
-            </td>
-            <td>
-                <!--<a href="{{movie.female_lead_actor_slug}}">-->
-                    {{movie.female_lead_actor}}
-                <!--</a>-->
-            </td>
-            <td>{{movie.director}}</td>
-            <td>{{movie['99popularity']}}</td>
-            <td>{{movie.imdb_score}}</td>
-        </tr>
+    <tr>
+        <td> 1</td>
+        <td>
+               {{movie.name}}
+        </td>
+        <td>
+            <!--<a href="{{movie.male_lead_actor_slug}}">-->
+            {{movie.genre}}
+            <!--</a>-->
+        </td>
+        <td>{{movie.director}}</td>
+        <td>{{movie['99popularity']}}</td>
+        <td>{{movie.imdb_score}}</td>
+        <td>
+            {% if permissions['type'] in ['super_admin', 'admin'] %}
+            <a href="/movies/edit/{{movie.slug}}">
+                <button type="button" class="btn btn-primary">
+                    Edit
+                </button>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
     </tbody>
 </table>
 {% endblock %}

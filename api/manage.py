@@ -29,6 +29,7 @@ class MovieAPI(Resource):
 
     def put(self, movie_slug):
         args = self.parser.parse_args()
+
         response = Movies.add(**args)
         return encode_response(response), 200
 
@@ -38,8 +39,8 @@ class MovieAPI(Resource):
         return encode_response(response), 200
 
     def prepare_parser(self):
-        self.arguments = { 'name': str, 'male_lead_actor': str, 'female_lead_actor': str,
-                           'director': str, 'imdb_score': float, '99popularity': int }
+        self.arguments = { 'name': str, 'genre': str, 'director': str, 'imdb_score': str,
+                           '99popularity': str }
         self.add_arguments()
 
     def add_arguments(self):

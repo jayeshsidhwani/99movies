@@ -44,8 +44,8 @@ class Movies():
         for token in tokens:
             movies = mongo.db.movies.find( { '$or' :
                                                            [
-                                                               {'name':token}, {'male_lead_actor':token},
-                                                               {'female_lead_actor':token}, {'director': token}
+                                                               {'name':token}, {'genre':token},
+                                                               {'director': token}
                                                            ]
             } )
             all_movies += movies
@@ -79,13 +79,12 @@ class Movies():
         name = kwargs.get('name', None)
         if not name: raise Exception('Name of the movie is compulsory')
         kwargs['slug'] = slugify(unicode(name))
-
-        for actor in ['male_lead_actor', 'female_lead_actor']:
-            _actor_name = kwargs.get(actor, None)
-            if _actor_name:
-                _actor_name_slug = slugify(unicode(_actor_name))
-                kwargs["{}_slug".format(actor)] = Actors.get_or_create( slug = _actor_name_slug,
-                                                                        name = _actor_name )['slug']
+        # for actor in ['male_lead_actor', 'female_lead_actor']:
+        #     _actor_name = kwargs.get(actor, None)
+        #     if _actor_name:
+        #         _actor_name_slug = slugify(unicode(_actor_name))
+        #         kwargs["{}_slug".format(actor)] = Actors.get_or_create( slug = _actor_name_slug,
+        #                                                                 name = _actor_name )['slug']
         return kwargs
 
     @staticmethod
