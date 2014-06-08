@@ -54,18 +54,22 @@
         <td>{{movie['99popularity']}}</td>
         <td>{{movie.imdb_score}}</td>
         <td>
-            <a href="edit/{{movie.slug}}">
-                <button type="button" class="btn btn-primary">
-                    Edit
-                </button>
-            </a>
+            {% if permissions['type'] in ['super_admin', 'admin'] %}
+                <a href="edit/{{movie.slug}}">
+                    <button type="button" class="btn btn-primary">
+                        Edit
+                    </button>
+                </a>
+            {% endif %}
         </td>
         <td>
-            <a href="delete/{{movie.slug}}">
-                <button type="button" class="btn btn-danger">
-                    Delete
-                </button>
-            </a>
+            {% if permissions['type'] == 'super_admin' %}
+                <a href="delete/{{movie.slug}}">
+                    <button type="button" class="btn btn-danger">
+                        Delete
+                    </button>
+                </a>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}

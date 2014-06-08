@@ -6,7 +6,7 @@ def check_auth(username, password):
     """This function is called to check if a username /
     password combination is valid.
     """
-    return username == 'admin' and password == 'secret'
+    return username == 'super_admin' and password == 'secret'
 
 
 def authenticate():

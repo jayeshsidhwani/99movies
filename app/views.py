@@ -15,6 +15,11 @@ class Movies(MethodView):
     def validate_login(self):
         args = request.form
         session['username'], session['password'] = args.get('username', None), args.get('password', None)
+        if session['username'] not in ['admin', 'super_admin']:
+            session['type'] = 'normal'
+        else:
+            session['type'] = session['username']
+
         next = args.get('next_url', None)
         if next:
             return redirect('/movies', code=302)
@@ -23,7 +28,7 @@ class Movies(MethodView):
 
 
     def get(self):
-        permissions = { 'admin': False, 'super_admin': False, 'user': True }
+        permissions = session
         movies = get(API_HOST.format(endpoint = 'movies')).json()
 
         return render_template('movies/all_movies.html',
@@ -41,11 +46,11 @@ class Movies(MethodView):
                                movie=movie)
 
     def delete_movie(self, slug):
-        username = session.get('username', '')
-        password = session.get('password', '')
+        username = session.get('username', None)
+        password = session.get('password', None)
         response = delete('http://localhost:5001/api/v1/movie/{}'.format(slug), auth=HTTPBasicAuth(username, password))
 
-        if response.status_code == 401:
+        if response.status_code == 401 and username is None:
             return redirect('/login', code=302)
         else:
             return redirect('/movies', code=302)
