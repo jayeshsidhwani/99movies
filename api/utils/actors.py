@@ -1,18 +1,18 @@
 from api import mongo
-from bson.objectid import ObjectId
 
 
 class Actors():
 
     @staticmethod
     def get_or_create(**kwargs):
-        actors = mongo.db.actors.find_one( kwargs )
+        actor = mongo.db.actors.find_one( kwargs )
 
-        if actors.count() > 0:
-            return actors['_id']
+        if actor:
+            return actor
         else:
-            return mongo.db.actors.insert( kwargs )
+            new_actor_id = mongo.db.actors.insert( kwargs )
+            return mongo.db.actors.find_one( {'_id': new_actor_id} )
 
     @staticmethod
-    def get(actor_id):
-        return mongo.db.actors.find_one( {'_id': ObjectId(actor_id)} )
+    def get(actor_slug_name):
+        return mongo.db.actors.find_one( {'slug': actor_slug_name} )
