@@ -41,15 +41,14 @@ class Movies():
 
     @staticmethod
     def sanitize_insert_arguments(**kwargs):
-
         name = kwargs.get('name', None)
         if not name: raise Exception('Name of the movie is compulsory')
-        kwargs['slug'] = slugify(name)
+        kwargs['slug'] = slugify(unicode(name))
 
         for actor in ['male_lead_actor', 'female_lead_actor']:
             _actor_name = kwargs.get(actor, None)
             if _actor_name:
-                _actor_name_slug = slugify(_actor_name)
+                _actor_name_slug = slugify(unicode(_actor_name))
                 kwargs["{}_slug".format(actor)] = Actors.get_or_create( slug = _actor_name_slug,
                                                                         name = _actor_name )['slug']
         return kwargs

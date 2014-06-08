@@ -5,6 +5,7 @@ from api import app, api, VERSION
 from flask.ext.restful import reqparse, Resource
 from api.utils.movies import Movies
 from api.utils.actors import Actors
+from api.auth import requires_auth
 from bson.json_util import dumps
 import json
 
@@ -22,6 +23,7 @@ class MovieAPI(Resource):
         response = Movies.get(movie_slug)
         return encode_response(response), 200
 
+    @requires_auth
     def delete(self, movie_slug):
         return Movies.delete(movie_slug), 200
 

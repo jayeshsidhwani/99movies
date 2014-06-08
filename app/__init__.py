@@ -5,6 +5,7 @@ from flask.ext.pymongo import PyMongo
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = '99movies'
+app.config["SECRET_KEY"] = "this_is_my_secret_key_which_should_be_secret!"
 
 mongo = PyMongo(app)
 
