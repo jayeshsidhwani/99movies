@@ -15,34 +15,29 @@ def encode_response(response):
 class MovieAPI(Resource):
 
     def __init__(self):
-        self.argument_parser = reqparse.RequestParser()
+        self.parser = reqparse.RequestParser()
+        self.prepare_parser()
 
-    def get(self, movie_id):
-        response = Movies.get(movie_id)
+    def get(self, movie_slug):
+        response = Movies.get(movie_slug)
         return encode_response(response), 200
 
-    def delete(self, movie_id):
-        return Movies.delete(movie_id), 200
+    def delete(self, movie_slug):
+        return Movies.delete(movie_slug), 200
 
-    def put(self):
+    def put(self, movie_slug):
         args = self.parser.parse_args()
         response = Movies.add(**args)
         return encode_response(response), 200
 
+    def prepare_parser(self):
+        self.arguments = { 'name': str, 'male_lead_actor': str, 'female_lead_actor': str,
+                           'director': str, 'imdb_score': float, '99popularity': int }
+        self.add_arguments()
+
     def add_arguments(self):
         for field, field_type in self.arguments.items():
             self.parser.add_argument(field, type=field_type)
-
-    @property
-    def argument_parser(self):
-        return self.parser
-
-    @argument_parser.setter
-    def argument_parser(self, parse):
-        self.parser = parse
-        self.arguments = { 'name': str, 'male_lead_actor': str, 'female_lead_actor': str,
-                           'supporting_actors': list, 'box_office_ratings': float, 'popularity_score': int }
-        self.add_arguments()
 
 class MovieListAPI(Resource):
 
@@ -55,7 +50,7 @@ class ActorAPI(Resource):
         response = Actors.get(actor_id)
         return encode_response(response), 200
 
-api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_id>'.format(VERSION))
+api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_slug>'.format(VERSION))
 api.add_resource(MovieListAPI, '/api/{}/movies/'.format(VERSION))
 api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
 

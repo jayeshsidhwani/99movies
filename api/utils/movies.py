@@ -26,8 +26,9 @@ class Movies():
             return {'success': False, 'errMsg': 'Movie name already exists'}
 
     @staticmethod
-    def delete(movie_id):
-        pass
+    def delete(movie_slug):
+        mongo.db.movies.remove( {'slug': movie_slug} )
+        return {'success': True}
 
     @staticmethod
     def object_exists(object):
@@ -44,8 +45,8 @@ class Movies():
             _actor_name = kwargs.get(actor, None)
             if _actor_name:
                 _actor_name_slug = slugify(_actor_name)
-                kwargs[actor] = Actors.get_or_create( slug = _actor_name_slug,
-                                                      name = _actor_name )['slug']
+                kwargs["{}_slug".format(actor)] = Actors.get_or_create( slug = _actor_name_slug,
+                                                                        name = _actor_name )['slug']
         return kwargs
 
     @staticmethod

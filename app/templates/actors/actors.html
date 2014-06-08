@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+    {% block content %}
+        {% for movie in movies %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="{{movie.slug}}">
+                        {{movie.name}}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{movie.male_lead_actor_slug}}">
+                        {{movie.male_lead_actor}}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{movie.female_lead_actor_slug}}">
+                        {{movie.female_lead_actor}}
+                    </a>
+                </td>
+                <td>{{movie.director}}</td>
+                <td>{{movie['99popularity']}}</td>
+                <td>{{movie.imdb_score}}</td>
+
+            </tr>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Lead Actor (Male)</th>
+        <th>Lead Actor (Female)</th>
+        <th>Director</th>
+        <th>Popularity</th>
+        <th>IMDB Score</th>
+        <th>Edit Details</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td> </td>
+            <td>
+                <a href="{{movie.slug}}">
+                    {{movie.name}}
+                </a>
+            </td>
+            <td>
+                <a href="{{movie.male_lead_actor_slug}}">
+                    {{movie.male_lead_actor}}
+                </a>
+            </td>
+            <td>
+                <a href="{{movie.female_lead_actor_slug}}">
+                    {{movie.female_lead_actor}}
+                </a>
+            </td>
+            <td>{{movie.director}}</td>
+            <td>{{movie['99popularity']}}</td>
+            <td>{{movie.imdb_score}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
