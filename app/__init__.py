@@ -7,8 +7,6 @@ app = Flask(__name__)
 app.config['MONGO_DBNAME'] = '99movies'
 app.config["SECRET_KEY"] = "this_is_my_secret_key_which_should_be_secret!"
 
-mongo = PyMongo(app)
-
 VERSION = 'v1'
 
 def register_blueprints(app):
