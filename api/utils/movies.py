@@ -31,6 +31,11 @@ class Movies():
         return {'success': True}
 
     @staticmethod
+    def update(movie_slug, **args):
+        mongo.db.movies.update( {'slug': movie_slug}, {'$set': args}, upsert=False, multi=False )
+        return {'success': True}
+
+    @staticmethod
     def object_exists(object):
         return object.count() > 0
 

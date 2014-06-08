@@ -38,14 +38,14 @@ class Movies(MethodView):
                                movie=movie)
 
     def save_movie(self):
-        print request.path
-        print request.method
-        print request.args
-        import code; code.interact(local=locals())
+        movie = request.form
+        post('http://localhost:5001/api/v1/movie/{}'.format(movie['slug']), data=movie).json()
+
+        return redirect('/movies', code=302)
 
 # Register the urls
 movies.add_url_rule('/movies/', view_func=Movies.as_view('list'))
 movies.add_url_rule('/movies/<slug>', view_func=Movies().get_a_movie)
 movies.add_url_rule('/movies/delete/<slug>', view_func=Movies().delete_movie)
 movies.add_url_rule('/movies/edit/<slug>', view_func=Movies().edit_movie)
-movies.add_url_rule('/movies/save/', view_func=Movies().save_movie)
+movies.add_url_rule('/movies/save/', view_func=Movies().save_movie, methods=['POST'])

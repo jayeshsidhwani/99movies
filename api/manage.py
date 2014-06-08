@@ -30,6 +30,11 @@ class MovieAPI(Resource):
         response = Movies.add(**args)
         return encode_response(response), 200
 
+    def post(self, movie_slug):
+        args = self.parser.parse_args()
+        response = Movies.update(movie_slug, **args)
+        return encode_response(response), 200
+
     def prepare_parser(self):
         self.arguments = { 'name': str, 'male_lead_actor': str, 'female_lead_actor': str,
                            'director': str, 'imdb_score': float, '99popularity': int }
