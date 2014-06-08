@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<table class="table table-striped">
+<div>
+    <a href="add/">
+        <button type="button" class="btn btn-primary">
+            + Add New Movie
+        </button>
+    </a>
+    <button type="button" class="btn btn-primary">
+        + Add Bulk Movies
+    </button>
+</div>
 
+<br/>
+<table class="table table-striped">
     <thead>
     <tr>
         <th>#</th>
@@ -30,12 +41,12 @@
             </a>
         </td>
         <td>
-            <a href="{{movie.male_lead_actor_slug}}">
+            <a href="/actors/{{movie.male_lead_actor_slug}}">
                 {{movie.male_lead_actor}}
             </a>
         </td>
         <td>
-            <a href="{{movie.female_lead_actor_slug}}">
+            <a href="/actors/{{movie.female_lead_actor_slug}}">
                 {{movie.female_lead_actor}}
             </a>
         </td>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<span class="header">Add a new movie</span>
+
+<form action="/movies/save/" method="POST">
+    <div class="form-group">
+        <label for="AddMovieName">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="">
+    </div>
+    <div class="form-group">
+        <label for="movieMaleLeadActor">Lead Actor (Male)</label>
+        <input type="text" class="form-control" id="male_lead_actor" name="male_lead_actor" value="">
+    </div>
+    <div class="form-group">
+        <label for="movieFemaleLeadActor">Lead Actor (Female)</label>
+        <input type="text" class="form-control" id="female_lead_actor" name="female_lead_actor" value="">
+    </div>
+    <div class="form-group">
+        <label for="movieMaleLeadActor">Director</label>
+        <input type="text" class="form-control" id="director" name="director" value="">
+    </div>
+    <div class="form-group">
+        <label for="movieMaleLeadActor">IMDB Score</label>
+        <input type="text" class="form-control" id="imdb_score" name="imdb_score" value="">
+    </div>
+    <div class="form-group">
+        <label for="movieMaleLeadActor">Popularity score</label>
+        <input type="text" class="form-control" id="99popularity" name="99popularity" value="">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}

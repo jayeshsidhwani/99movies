@@ -39,9 +39,18 @@ class Movies(MethodView):
 
     def save_movie(self):
         movie = request.form
-        post('http://localhost:5001/api/v1/movie/{}'.format(movie['slug']), data=movie).json()
+        slug = movie.get('slug', None)
+        if slug:
+            post('http://localhost:5001/api/v1/movie/{}'.format(movie['slug']), data=movie).json()
+        else:
+            put('http://localhost:5001/api/v1/movie/new', data=movie).json()
 
         return redirect('/movies', code=302)
+
+    def add_new_movie(self):
+        return render_template('movies/add_movie.html',
+                               title = 'Home')
+
 
 # Register the urls
 movies.add_url_rule('/movies/', view_func=Movies.as_view('list'))
@@ -49,3 +58,4 @@ movies.add_url_rule('/movies/<slug>', view_func=Movies().get_a_movie)
 movies.add_url_rule('/movies/delete/<slug>', view_func=Movies().delete_movie)
 movies.add_url_rule('/movies/edit/<slug>', view_func=Movies().edit_movie)
 movies.add_url_rule('/movies/save/', view_func=Movies().save_movie, methods=['POST'])
+movies.add_url_rule('/movies/add/', view_func=Movies().add_new_movie)
