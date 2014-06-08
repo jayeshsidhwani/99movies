@@ -41,7 +41,7 @@ class Movies(MethodView):
         args = request.args
         query = args.get('search_query', None)
         if query:
-            movies = get('http://localhost:5001/api/v1/movies/search/{}'.format(query))
+            movies = get('{}/movies/search/{}'.format(HOST, query))
             if movies:
                 movies = movies.json()
                 return render_template('movies/all_movies.html',
@@ -54,7 +54,7 @@ class Movies(MethodView):
 
     def get_a_movie(self, slug):
         permissions = session
-        movie = get('http://localhost:5001/api/v1/movie/{}'.format(slug)).json()
+        movie = get('{}/movie/{}'.format(HOST, slug)).json()
 
         return render_template('movies/movie.html',
                                title = 'Home',
@@ -64,7 +64,7 @@ class Movies(MethodView):
     def delete_movie(self, slug):
         username = session.get('username', None)
         password = session.get('password', None)
-        response = delete('http://localhost:5001/api/v1/movie/{}'.format(slug), auth=HTTPBasicAuth(username, password))
+        response = delete('{}/movie/{}'.format(HOST, slug), auth=HTTPBasicAuth(username, password))
 
         if response.status_code == 401 and username is None:
             return redirect('/login', code=302)
@@ -72,7 +72,7 @@ class Movies(MethodView):
             return redirect('/movies', code=302)
 
     def edit_movie(self, slug):
-        movie = get('http://localhost:5001/api/v1/movie/{}'.format(slug)).json()
+        movie = get('{}/movie/{}'.format(HOST, slug)).json()
         return render_template('movies/edit_movie.html',
                                title = 'Home',
                                movie=movie)
@@ -81,9 +81,9 @@ class Movies(MethodView):
         movie = request.form
         slug = movie.get('slug', None)
         if slug:
-            post('http://localhost:5001/api/v1/movie/{}'.format(movie['slug']), data=movie).json()
+            post('{}/movie/{}'.format(HOST, movie['slug']), data=movie).json()
         else:
-            put('http://localhost:5001/api/v1/movie/new', data=movie).json()
+            put('{}/movie/new'.format(HOST), data=movie).json()
 
         return redirect('/movies', code=302)
 
