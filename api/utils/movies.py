@@ -1,6 +1,8 @@
 from api import mongo
 from actors import Actors
 from slugify import slugify
+import re
+
 
 class Movies():
 
@@ -34,6 +36,39 @@ class Movies():
     def update(movie_slug, **args):
         mongo.db.movies.update( {'slug': movie_slug}, {'$set': args}, upsert=False, multi=False )
         return {'success': True}
+
+    @staticmethod
+    def search(query):
+        tokens = Movies.parse_search_tokens(query)
+        all_movies = []
+        for token in tokens:
+            movies = mongo.db.movies.find( { '$or' :
+                                                           [
+                                                               {'name':token}, {'male_lead_actor':token},
+                                                               {'female_lead_actor':token}, {'director': token}
+                                                           ]
+            } )
+            all_movies += movies
+
+        return all_movies
+
+
+    @staticmethod
+    def parse_search_tokens(tokens):
+        queries = tokens.split(' ')
+        regexes = []
+        for query in queries:
+            regex = ".*" + query + ".*"
+            regexes.append( re.compile(regex, re.IGNORECASE) )
+
+        return regexes
+
+        # padded_tokens = ""
+        # for token in tokens:
+        #     regex = ".*" + token + ".*"
+        #     padded_tokens += re.compile(regex, re.IGNORECASE)
+
+        # return padded_tokens
 
     @staticmethod
     def object_exists(object):

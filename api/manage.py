@@ -52,6 +52,12 @@ class MovieListAPI(Resource):
         response = Movies.all()
         return encode_response(response), 200
 
+class MovieSearchAPI(Resource):
+
+    def get(self, query):
+        response = Movies.search(query)
+        return encode_response(response), 200
+
 class ActorAPI(Resource):
     def get(self, actor_id):
         response = Actors.get(actor_id)
@@ -59,6 +65,7 @@ class ActorAPI(Resource):
 
 api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_slug>'.format(VERSION))
 api.add_resource(MovieListAPI, '/api/{}/movies/'.format(VERSION))
+api.add_resource(MovieSearchAPI, '/api/{}/movies/search/<string:query>'.format(VERSION))
 api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
 
 if __name__ == '__main__':

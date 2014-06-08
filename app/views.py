@@ -26,7 +26,6 @@ class Movies(MethodView):
         else:
             return redirect('/movies', code=302)
 
-
     def get(self):
         permissions = session
         movies = get(API_HOST.format(endpoint = 'movies')).json()
@@ -36,8 +35,24 @@ class Movies(MethodView):
                                permissions = permissions,
                                movies=movies)
 
+    def search(self):
+        permissions = session
+        args = request.args
+        query = args.get('search_query', None)
+        if query:
+            movies = get('http://localhost:5001/api/v1/movies/search/{}'.format(query))
+            if movies:
+                movies = movies.json()
+                return render_template('movies/all_movies.html',
+                                   title = 'Home',
+                                   permissions = permissions,
+                                   movies=movies)
+
+        else:
+            return redirect('/movies', code=302)
+
     def get_a_movie(self, slug):
-        permissions = { 'admin': False, 'super_admin': False, 'user': True }
+        permissions = session
         movie = get('http://localhost:5001/api/v1/movie/{}'.format(slug)).json()
 
         return render_template('movies/movie.html',
@@ -78,7 +93,9 @@ class Movies(MethodView):
 
 # Register the urls
 movies.add_url_rule('/login/', view_func=Movies().login)
+movies.add_url_rule('/search/', view_func=Movies().search)
 movies.add_url_rule('/login/validate/', view_func=Movies().validate_login, methods=['POST'])
+movies.add_url_rule('/', view_func=Movies().get)
 movies.add_url_rule('/movies/', view_func=Movies.as_view('list'))
 movies.add_url_rule('/movies/<slug>', view_func=Movies().get_a_movie)
 movies.add_url_rule('/movies/delete/<slug>', view_func=Movies().delete_movie)
