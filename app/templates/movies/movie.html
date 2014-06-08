@@ -10,28 +10,28 @@
         <th>Director</th>
         <th>Popularity</th>
         <th>IMDB Score</th>
-        <th>Edit Details</th>
-        <th>Delete</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
 
         <tr>
-            <td> </td>
+            <td> 1 </td>
             <td>
-                <a href="{{movie.slug}}">
+                <a href="/movie/{{movie.slug}}">
                     {{movie.name}}
                 </a>
             </td>
             <td>
-                <a href="{{movie.male_lead_actor_slug}}">
+                <!--<a href="{{movie.male_lead_actor_slug}}">-->
                     {{movie.male_lead_actor}}
-                </a>
+                <!--</a>-->
             </td>
             <td>
-                <a href="{{movie.female_lead_actor_slug}}">
+                <!--<a href="{{movie.female_lead_actor_slug}}">-->
                     {{movie.female_lead_actor}}
-                </a>
+                <!--</a>-->
             </td>
             <td>{{movie.director}}</td>
             <td>{{movie['99popularity']}}</td>

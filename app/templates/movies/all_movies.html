@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-    <a href="add/">
+    <a href="/movies/add/">
         <button type="button" class="btn btn-primary">
             + Add New Movie
         </button>
     </a>
-    <button type="button" class="btn btn-primary">
-        + Add Bulk Movies
-    </button>
+    <!--<button type="button" class="btn btn-primary">-->
+        <!--+ Add Bulk Movies-->
+    <!--</button>-->
 </div>
 
 <br/>
@@ -36,19 +36,19 @@
     <tr>
         <td>{{ loop.index }}</td>
         <td>
-            <a href="{{movie.slug}}">
+            <a href="/movies/{{movie.slug}}">
                 {{movie.name}}
             </a>
         </td>
         <td>
-            <a href="/actors/{{movie.male_lead_actor_slug}}">
+            <!--<a href="/actor/{{movie.male_lead_actor_slug}}">-->
                 {{movie.male_lead_actor}}
-            </a>
+            <!--</a>-->
         </td>
         <td>
-            <a href="/actors/{{movie.female_lead_actor_slug}}">
+            <!--<a href="/actor/{{movie.female_lead_actor_slug}}">-->
                 {{movie.female_lead_actor}}
-            </a>
+            <!--</a>-->
         </td>
         <td>{{movie.director}}</td>
         <td>{{movie['99popularity']}}</td>

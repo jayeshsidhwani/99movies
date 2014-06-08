@@ -5,7 +5,8 @@ from requests.auth import HTTPBasicAuth
 
 movies = Blueprint('movies', __name__, template_folder='templates')
 
-HOST = 'http://54.213.58.239:5001/api/v1'
+# HOST = 'http://54.213.58.239:5001/api/v1'
+HOST = 'http://0.0.0.0:5001/api/v1'
 
 class Movies(MethodView):
 
@@ -29,7 +30,9 @@ class Movies(MethodView):
 
     def get(self):
         permissions = session
+        # import code; code.interact(local=locals())
         movies = get('{}/movies/'.format(HOST)).json()
+
 
         return render_template('movies/all_movies.html',
                                title = 'Home',
