@@ -1,7 +1,16 @@
-import os, sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from flask import Flask,render_template
+app = Flask(__name__)
 
-from app import app
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', port=80, debug=True)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+@app.route('/')
+def index():
+    return render_template('/movies/movies.html')
+
+@app.route('/movie')
+def movie():
+    return render_template('/movies/movie.html')
+
+if __name__ == '__main__':
+    app.run()

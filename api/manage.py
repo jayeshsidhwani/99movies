@@ -7,6 +7,9 @@ from api.utils.movies import Movies
 from api.utils.actors import Actors
 from api.auth import requires_auth
 from bson.json_util import dumps
+from flask_cors import cross_origin
+from cors_header import cors
+# from flask.ext.cors import cross_origin
 import json
 
 
@@ -49,12 +52,14 @@ class MovieAPI(Resource):
 
 class MovieListAPI(Resource):
 
+    @cors
     def get(self):
         response = Movies.all()
         return encode_response(response), 200
 
 class MovieSearchAPI(Resource):
 
+    @cors
     def get(self, query):
         response = Movies.search(query)
         return encode_response(response), 200
@@ -70,4 +75,4 @@ api.add_resource(MovieSearchAPI, '/api/{}/movies/search/<string:query>'.format(V
 api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5001)
