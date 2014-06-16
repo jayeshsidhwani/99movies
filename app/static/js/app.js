@@ -23,13 +23,3 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
         };
 
     }]);
-
-movies_app.controller('SearchMovies', ['$scope', '$http',
-    function ($scope, $http) {
-        $http
-            .get(HOST + 'movies/search/' + 'da')
-            .success(function (data, status, headers, config) {
-                $scope.movies = data;
-            });
-
-    }]);
