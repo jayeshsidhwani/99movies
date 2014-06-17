@@ -2,68 +2,115 @@
 {% block content %}
 {% raw %}
 <div ng-controller="GetAllMovies">
+
+    <div class="navbar-form navbar-left">
+        <button type="submit" class="btn btn-success" ng-click="editClicked()">Add New Movie</button>
+    </div>
     <div class="navbar-form navbar-right">
         <input type="text" class="form-control" ng-model="searchText">
 
         </input>
         <button type="submit" class="btn btn-default" ng-click="searchClicked()">Search</button>
     </div>
-    <br />
-    <div class="navbar-form navbar-left">
-        Showing <b>{{movies.length}}</b> movies.
+
+
+    <br/>
+    <br/>
+    <hr/>
+
+    <div ng-if="movies.length == 0 and !edit_movie_details_present">
+        No movies found.
     </div>
 
+    <div ng-if="movies.length > 1">
+        <table class="table table-striped">
+            <div class="navbar-form navbar-left">
+                Showing <b>{{movies.length}}</b> movies.
+            </div>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Director</th>
+                <th>Popularity</th>
+                <th>IMDB</th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>Director</th>
-            <th>Popularity</th>
-            <th>IMDB</th>
-            <th>
-            </th>
-            <th>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
+            <tr ng-repeat="movie in movies">
+                <td>
+                    {{$index + 1}}
+                </td>
+                <td>
+                    {{movie.name}}
+                </td>
+                <td>
+                    {{movie.genre}}
+                </td>
+                <td>
+                    {{movie.director}}
+                </td>
+                <td>
+                    {{movie.99popularity}}
+                </td>
+                <td>
+                    {{movie.imdb_score}}
+                </td>
+                <td>
+                    <button class="btn btn-info" ng-click="editClicked(movie.slug)">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteClicked(movie.slug)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
 
-        <tr ng-repeat="movie in movies">
-            <td>
-                {{$index + 1}}
-            </td>
-            <td>
-                {{movie.name}}
-            </td>
-            <td>
-                {{movie.genre}}
-            </td>
-            <td>
-                {{movie.director}}
-            </td>
-            <td>
-                {{movie.99popularity}}
-            </td>
-            <td>
-                {{movie.imdb_score}}
-            </td>
-            <td>
-                <button class="btn btn-default" ng-click="editClicked(movie.slug)">
-                    Edit
-                </button>
-            </td>
-            <td>
-                <button class="btn btn-danger" ng-click="deleteClicked(movie.slug)">
-                    Delete
-                </button>
-            </td>
-        </tr>
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
+    </div>
+    <!--
+    Add or Edit Movie
+    -->
+    <div ng-if="edit_movie_details_present">
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" value="{{edit_movie.name}}">
+        </div>
+        <div class="form-group">
+            <label>Genre - comma separated</label>
+            <input type="text" class="form-control" id="genre" name="genre" value="{{edit_movie.genre}}">
+        </div>
+        <div class="form-group">
+            <label>Director</label>
+            <input type="text" class="form-control" id="director" name="director" value="{{edit_movie.director}}">
+        </div>
+        <div class="form-group">
+            <label>IMDB Score</label>
+            <input type="text" class="form-control" id="imdb_score" name="imdb_score" value="{{edit_movie.imdb_score}}">
+        </div>
+        <div class="form-group">
+            <label>Popularity score</label>
+            <input type="text" class="form-control" id="99popularity" name="99popularity"
+                   value="{{edit_movie['99popularity']}}">
+        </div>
+        <div class="form-group">
+            <label>Slug</label>
+            <input type="text" class="form-control" id="slug" name="slug" value="{{edit_movie.slug}}">
+        </div>
+        <button type="submit" class="btn btn-success" ng-click="saveClicked()">Save!</button>
+    </div>
 </div>
+
 {% endraw %}
 {% endblock %}

@@ -8,7 +8,7 @@ app = Flask(__name__)
 def index():
     return render_template('/movies/movies.html')
 
-@app.route('/movie')
+@app.route('/movie/')
 def movie():
     return render_template('/movies/movie.html')
 

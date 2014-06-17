@@ -14,12 +14,33 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                 .get(HOST + 'movies/search/' + $scope.searchText)
                 .success(function (data, status, headers, config) {
                     $scope.movies = data;
+                    $scope.edit_movie_details_present = false;
                     $scope.searchResult = "Showing " + data.length + " results for: " + $scope.searchText;
                 });
         };
 
-        $scope.editClicked = function(slug) {
-            console.log(slug);
+        $scope.editClicked = function (slug) {
+            $scope.slug = slug;
+            $http
+                .get(HOST + 'movie/' + slug + '/')
+                .success(function (data, status, headers, config) {
+                    $scope.edit_movie_details_present = true;
+                    $scope.edit_movie = data;
+                    $scope.movies = [];
+                });
+        };
+
+        $scope.saveMovie = function(){
+
+        };
+
+        $scope.deleteClicked = function (slug) {
+            $http
+                .get(HOST + 'movie/' + slug + '/')
+                .success(function (data, status, headers, config) {
+                    console.log(data);
+                    console.log(status);
+                });
         };
 
     }]);

@@ -17,6 +17,7 @@ def encode_response(response):
     return json.loads(dumps(response))
 
 class MovieAPI(Resource):
+    decorators = [cors]
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
@@ -26,7 +27,7 @@ class MovieAPI(Resource):
         response = Movies.get(movie_slug)
         return encode_response(response), 200
 
-    @requires_auth
+    # @requires_auth
     def delete(self, movie_slug):
         return Movies.delete(movie_slug), 200
 
@@ -69,7 +70,7 @@ class ActorAPI(Resource):
         response = Actors.get(actor_id)
         return encode_response(response), 200
 
-api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_slug>'.format(VERSION))
+api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_slug>/'.format(VERSION))
 api.add_resource(MovieListAPI, '/api/{}/movies/'.format(VERSION))
 api.add_resource(MovieSearchAPI, '/api/{}/movies/search/<string:query>'.format(VERSION))
 api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
