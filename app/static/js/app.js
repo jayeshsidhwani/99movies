@@ -30,7 +30,7 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
 
         $scope.searchClicked = function () {
             $scope.resetNotifications();
-            console.log($scope.username);
+
             $http
                 .get(HOST + 'movies/search/' + $scope.searchText)
                 .success(function (data, status, headers, config) {
