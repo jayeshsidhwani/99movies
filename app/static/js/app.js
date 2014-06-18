@@ -44,6 +44,7 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                         $http
                             .get(HOST + 'movies/')
                             .success(function (data, status, headers, config) {
+                                $scope.edit_movie_details_present = false;
                                 $scope.movies = data;
                             });
                     });
@@ -59,6 +60,7 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                         $http
                             .get(HOST + 'movies/')
                             .success(function (data, status, headers, config) {
+                                $scope.edit_movie_details_present = false;
                                 $scope.movies = data;
                             });
                     });
