@@ -4,6 +4,10 @@ import re
 
 
 class Movies():
+    AUTHORISATIONS = {
+        'edit': 'admin',
+        'delete': 'super_admin'
+    }
 
     @classmethod
     def all(self):
@@ -38,14 +42,24 @@ class Movies():
             return {'success': False, 'errMsg': 'Movie name already exists'}
 
     @staticmethod
-    def delete(movie_slug):
-        mongo.db.movies.remove( {'slug': movie_slug} )
-        return {'success': True}
+    def delete(movie_slug, token):
+        allowed = Movies.can_edit_movie(token, type='delete')
+        if allowed:
+            mongo.db.movies.remove( {'slug': movie_slug} )
+            return {'success': True}
+        else:
+            return {'success': False}
+
 
     @staticmethod
-    def update(movie_slug, **args):
-        mongo.db.movies.update( {'slug': movie_slug}, {'$set': args}, upsert=False, multi=False )
-        return {'success': True}
+    def update(movie_slug, token, **args):
+        allowed = Movies.can_edit_movie(token, type='edit')
+
+        if allowed:
+            mongo.db.movies.update( {'slug': movie_slug}, {'$set': args}, upsert=False, multi=False )
+            return {'success': True}
+        else:
+            return {'success': False}
 
     @staticmethod
     def search(query):
@@ -62,7 +76,6 @@ class Movies():
             all_movies += movies
 
         return all_movies
-
 
     @staticmethod
     def parse_search_tokens(tokens):
@@ -93,3 +106,9 @@ class Movies():
             return False
         else:
             return True
+
+    @staticmethod
+    def can_edit_movie(token, type):
+        token = token.strip().replace('"', '')
+        user_type = mongo.db.tokens.find_one( {'token': token} )
+        return (user_type and user_type['type'] == Movies.AUTHORISATIONS.get(type, 'normal'))

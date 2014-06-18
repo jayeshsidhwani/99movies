@@ -2,25 +2,42 @@
 {% block content %}
 {% raw %}
 <div ng-controller="GetAllMovies">
-
-    <div class="navbar-form navbar-left">
-        <button type="submit" class="btn btn-success" ng-click="editClicked()">Add New Movie</button>
-    </div>
     <div class="navbar-form navbar-right">
-        <input type="text" class="form-control" ng-model="searchText">
+        <input type="text" class="form-control" placeholder="Username" ng-model="username">
 
         </input>
-        <button type="submit" class="btn btn-default" ng-click="searchClicked()">Search</button>
-    </div>
+        <input type="password" class="form-control"  placeholder="Password" ng-model="password">
 
+        </input>
+        <button type="submit" class="btn btn-success" ng-click="loginClicked()">Login</button>
+    </div>
 
     <br/>
     <br/>
     <hr/>
 
+    <!--<div ng-if="!show_login">-->
+    <div class="navbar-form navbar-left">
+        <!--<button type="submit" class="btn btn-success" ng-click="showLogin()">Login</button>-->
+        <button type="submit" class="btn btn-success" ng-click="editClicked()">Add New Movie</button>
+    </div>
+    <div class="navbar-form navbar-right">
+        <input type="text" class="form-control"  placeholder="Query.."  ng-model="searchText">
+
+        </input>
+        <button type="submit" class="btn btn-default" ng-click="searchClicked()">Search</button>
+
+    </div>
+    <br/>
+    <br/>
+    <hr/>
+
     <div>
-        <div class="alert alert-success" ng-if="success_notification">
+        <div class="alert alert-dismissable alert-success" ng-if="success_notification">
             {{success_notification}}
+        </div>
+        <div class="alert alert-dismissable alert-danger" ng-if="error_notification">
+            {{error_notification}}
         </div>
     </div>
     <div ng-if="movies.length > 1">
@@ -98,7 +115,8 @@
         </div>
         <div class="form-group">
             <label>IMDB Score</label>
-            <input type="text" class="form-control" id="imdb_score" name="imdb_score" ng-model="edit_movie.imdb_score">
+            <input type="text" class="form-control" id="imdb_score" name="imdb_score"
+                   ng-model="edit_movie.imdb_score">
         </div>
         <div class="form-group">
             <label>Popularity score</label>
@@ -111,6 +129,7 @@
         </div>
         <button type="submit" class="btn btn-success" ng-click="saveMovie()">Save!</button>
     </div>
+    <!--</div>-->
 </div>
 
 {% endraw %}
