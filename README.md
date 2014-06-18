@@ -36,6 +36,7 @@ DESCRIPTION:    You can login using the login box given at the top of the page. 
                 user and it's type and returns a token. For all subsequent communications with the API, the APP sends this token.
                 If the token is validated by the API by checking in the MongoDB, the APP is allowed access for the particular
                 resource otherwise error is thrown.
+```
 ---
 
 ##### `Search`
@@ -43,4 +44,5 @@ DESCRIPTION:    You can login using the login box given at the top of the page. 
 DESCRIPTION:    The search box at the top could be used to search across Movie Name, Director / Actor Name. The logic begind
                 search can be found in search method in api/utils/movies/
                 This search can be fairly enhanced by using a token-based search engine like Solr / Elastic Search
+```
 ---
