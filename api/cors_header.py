@@ -13,7 +13,7 @@ def cors(func, allow_origin=None, allow_headers=None, max_age=None):
         response = func(*args, **kwargs)
         cors_headers = {
             "Access-Control-Allow-Origin": allow_origin,
-            "Access-Control-Allow-Methods": func.__name__.upper(),
+            "Access-Control-Allow-Methods": ['DELETE', 'GET', 'POST', 'PUT', 'OPTIONS'],
             "Access-Control-Allow-Headers": allow_headers,
             "Access-Control-Max-Age": max_age,
         }

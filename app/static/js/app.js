@@ -30,16 +30,27 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                 });
         };
 
-        $scope.saveMovie = function(){
+        $scope.saveMovie = function () {
+            $http
+                .post(HOST + 'movie/' + $scope.edit_movie['slug'] + '/',
+                {
+                    'name': $scope.edit_movie['name']
+                })
+                .success(function (data, status, headers, config) {
 
+                });
         };
 
         $scope.deleteClicked = function (slug) {
             $http
-                .get(HOST + 'movie/' + slug + '/')
+                .delete(HOST + 'movie/' + slug + '/')
                 .success(function (data, status, headers, config) {
-                    console.log(data);
-                    console.log(status);
+                    $scope.success_notification = "Movie successfully deleted";
+                    $http
+                        .get(HOST + 'movies/')
+                        .success(function (data, status, headers, config) {
+                            $scope.movies = data;
+                        });
                 });
         };
 

@@ -5,11 +5,9 @@ from api import app, api, VERSION
 from flask.ext.restful import reqparse, Resource
 from api.utils.movies import Movies
 from api.utils.actors import Actors
-from api.auth import requires_auth
+from flask import request
 from bson.json_util import dumps
-from flask_cors import cross_origin
 from cors_header import cors
-# from flask.ext.cors import cross_origin
 import json
 
 
@@ -18,34 +16,44 @@ def encode_response(response):
 
 class MovieAPI(Resource):
     decorators = [cors]
-
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.prepare_parser()
 
+    @cors
     def get(self, movie_slug):
         response = Movies.get(movie_slug)
         return encode_response(response), 200
 
     # @requires_auth
+    @cors
     def delete(self, movie_slug):
         return Movies.delete(movie_slug), 200
 
+    @cors
     def put(self, movie_slug):
         args = self.parser.parse_args()
 
         response = Movies.add(**args)
         return encode_response(response), 200
 
+    @cors
     def post(self, movie_slug):
         args = self.parser.parse_args()
         response = Movies.update(movie_slug, **args)
         return encode_response(response), 200
 
+
+    @cors
+    def options(self, movie_slug):
+        request.headers.get('Access-Control-Request-Method')
+        return 200
+
     def prepare_parser(self):
         self.arguments = { 'name': str, 'genre': str, 'director': str, 'imdb_score': str,
                            '99popularity': str }
         self.add_arguments()
+
 
     def add_arguments(self):
         for field, field_type in self.arguments.items():

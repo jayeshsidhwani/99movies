@@ -21,7 +21,11 @@
     <div ng-if="movies.length == 0 and !edit_movie_details_present">
         No movies found.
     </div>
-
+    <div>
+        <div class="alert alert-success" ng-if="success_notification">
+            {{success_notification}}
+        </div>
+    </div>
     <div ng-if="movies.length > 1">
         <table class="table table-striped">
             <div class="navbar-form navbar-left">
@@ -85,30 +89,30 @@
 
         <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" value="{{edit_movie.name}}">
+            <input type="text" class="form-control" ng-model="edit_movie.name">
         </div>
         <div class="form-group">
             <label>Genre - comma separated</label>
-            <input type="text" class="form-control" id="genre" name="genre" value="{{edit_movie.genre}}">
+            <input type="text" class="form-control" id="genre" name="genre" ng-model="edit_movie.genre">
         </div>
         <div class="form-group">
             <label>Director</label>
-            <input type="text" class="form-control" id="director" name="director" value="{{edit_movie.director}}">
+            <input type="text" class="form-control" id="director" name="director" ng-model="edit_movie.director">
         </div>
         <div class="form-group">
             <label>IMDB Score</label>
-            <input type="text" class="form-control" id="imdb_score" name="imdb_score" value="{{edit_movie.imdb_score}}">
+            <input type="text" class="form-control" id="imdb_score" name="imdb_score" ng-model="edit_movie.imdb_score">
         </div>
         <div class="form-group">
             <label>Popularity score</label>
             <input type="text" class="form-control" id="99popularity" name="99popularity"
-                   value="{{edit_movie['99popularity']}}">
+                   ng-model="edit_movie['99popularity']">
         </div>
         <div class="form-group">
             <label>Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="{{edit_movie.slug}}">
+            <input type="text" class="form-control" id="slug" name="slug" ng-model="edit_movie.slug">
         </div>
-        <button type="submit" class="btn btn-success" ng-click="saveClicked()">Save!</button>
+        <button type="submit" class="btn btn-success" ng-click="saveMovie()">Save!</button>
     </div>
 </div>
 
