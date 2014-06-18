@@ -3,11 +3,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('/movies/movies.html')
-
-@app.route('/movie/')
-def movie():
-    return render_template('/movies/movie.html')
+    return render_template('/movies/all.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
