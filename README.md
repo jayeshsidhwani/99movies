@@ -22,6 +22,7 @@ Requirements are listed in the requirements.txt
 ```
 URL:            'localhost/'
 DESCRIPTION:    Lists all the movies. Depending on the authentication; you can edit or delete the movie.
+```
 ---
 
 ##### `Login`
