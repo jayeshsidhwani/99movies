@@ -1,5 +1,5 @@
 var movies_app = angular.module('movies_app', []);
-var HOST = "http://54.213.58.239/api/v1/";
+var HOST = "http://54.213.58.239:5001/api/v1/";
 
 movies_app.controller('GetAllMovies', ['$scope', '$http',
     function ($scope, $http) {
