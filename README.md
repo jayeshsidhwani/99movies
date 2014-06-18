@@ -28,22 +28,23 @@ DESCRIPTION:    Lists all the movies. Depending on the authentication; you can e
 ##### `Login`
 ```
 URL:            'localhost/login'
-DESCRIPTION:    You can login using the login box given at the top of the page. The login enables authentication / authorisation.
-                By default, you can only view all the movies. You need to be an 'admin' to edit and a 'super_admin' to delete a movie
+DESCRIPTION:    You can login using the login box given at the top of the page. The login enables
+                authentication / authorisation. By default, you can only view all the movies.
+                You need to be an 'admin' to edit and a 'super_admin' to delete a movie
                 To simplify things, you can become one by using the respecting role as password.
                 So for admin; username can be anything but password needs to be 'admin' likewise for 'super_admin'
 
-                The authentication is enabled by using tokens to-fro from app to api. At the time of login, the API registers the new
-                user and it's type and returns a token. For all subsequent communications with the API, the APP sends this token.
-                If the token is validated by the API by checking in the MongoDB, the APP is allowed access for the particular
-                resource otherwise error is thrown.
+                The authentication is enabled by using tokens to-fro from app to api. At the time of login,
+                the API registers the new user and it's type and returns a token. For all subsequent communications
+                with the API, the APP sends this token. If the token is validated by the API by checking in
+                the MongoDB, the APP is allowed access for the particular resource otherwise error is thrown.
 ```
 ---
 
 ##### `Search`
 ```
-DESCRIPTION:    The search box at the top could be used to search across Movie Name, Director / Actor Name. The logic begind
-                search can be found in search method in api/utils/movies/
-                This search can be fairly enhanced by using a token-based search engine like Solr / Elastic Search
+DESCRIPTION:    The search box at the top could be used to search across Movie Name, Director / Actor Name.
+                The logic behind search can be found in search method in api/utils/movies/. This search can be
+                fairly enhanced by using a token-based search engine like Solr / Elastic Search
 ```
 ---
