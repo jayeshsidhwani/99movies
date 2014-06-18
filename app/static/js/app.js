@@ -1,5 +1,5 @@
 var movies_app = angular.module('movies_app', []);
-var HOST = "http://54.213.58.239:5001/api/v1/";
+var HOST = "http://localhost:5001/api/v1/";
 
 movies_app.controller('GetAllMovies', ['$scope', '$http',
     function ($scope, $http) {
@@ -9,7 +9,19 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                 $scope.movies = data;
             });
 
+        $scope.loginClicked = function () {
+            console.log($scope.username);
+//            $http
+//                .get(HOST + 'movies/search/' + $scope.searchText)
+//                .success(function (data, status, headers, config) {
+//                    $scope.movies = data;
+//                    $scope.edit_movie_details_present = false;
+//                    $scope.searchResult = "Showing " + data.length + " results for: " + $scope.searchText;
+//                });
+        };
+
         $scope.searchClicked = function () {
+            console.log($scope.username);
             $http
                 .get(HOST + 'movies/search/' + $scope.searchText)
                 .success(function (data, status, headers, config) {
