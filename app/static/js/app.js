@@ -20,7 +20,7 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
         };
 
         $scope.editClicked = function (slug) {
-            $scope.slug = slug;
+            $scope.old_slug = slug;
             $http
                 .get(HOST + 'movie/' + slug + '/')
                 .success(function (data, status, headers, config) {
@@ -31,14 +31,40 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
         };
 
         $scope.saveMovie = function () {
-            $http
-                .post(HOST + 'movie/' + $scope.edit_movie['slug'] + '/',
-                {
-                    'name': $scope.edit_movie['name']
-                })
-                .success(function (data, status, headers, config) {
+            console.log($scope.old_slug);
 
-                });
+            if ($scope.old_slug != undefined) {
+                $http
+                    .post(HOST + 'movie/' + $scope.edit_movie['slug'] + '/',
+                    {
+                        'data': $scope.edit_movie
+                    })
+                    .success(function (data, status, headers, config) {
+                        $scope.success_notification = "Movie successfully edited";
+                        $http
+                            .get(HOST + 'movies/')
+                            .success(function (data, status, headers, config) {
+                                $scope.movies = data;
+                            });
+                    });
+            }
+            else {
+                $http
+                    .put(HOST + 'movie/new/',
+                    {
+                        'data': $scope.edit_movie
+                    })
+                    .success(function (data, status, headers, config) {
+                        $scope.success_notification = "Movie successfully added";
+                        $http
+                            .get(HOST + 'movies/')
+                            .success(function (data, status, headers, config) {
+                                $scope.movies = data;
+                            });
+                    });
+            }
+
+            $scope.old_slug = null;
         };
 
         $scope.deleteClicked = function (slug) {
@@ -53,5 +79,4 @@ movies_app.controller('GetAllMovies', ['$scope', '$http',
                         });
                 });
         };
-
     }]);

@@ -8,7 +8,7 @@ from api.utils.actors import Actors
 from flask import request
 from bson.json_util import dumps
 from cors_header import cors
-import json
+import json, ast
 
 
 def encode_response(response):
@@ -32,15 +32,16 @@ class MovieAPI(Resource):
 
     @cors
     def put(self, movie_slug):
-        args = self.parser.parse_args()
-
-        response = Movies.add(**args)
+        data = ast.literal_eval(request.data)['data']
+        data.pop('_id', None)
+        response = Movies.add(**data)
         return encode_response(response), 200
 
     @cors
     def post(self, movie_slug):
-        args = self.parser.parse_args()
-        response = Movies.update(movie_slug, **args)
+        data = ast.literal_eval(request.data)['data']
+        data.pop('_id', None)
+        response = Movies.update(movie_slug, **data)
         return encode_response(response), 200
 
 
