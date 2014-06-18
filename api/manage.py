@@ -4,7 +4,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from api import app, api, VERSION
 from flask.ext.restful import reqparse, Resource
 from api.utils.movies import Movies
-from api.utils.actors import Actors
 from flask import request
 from bson.json_util import dumps
 from cors_header import cors
@@ -44,7 +43,6 @@ class MovieAPI(Resource):
         response = Movies.update(movie_slug, **data)
         return encode_response(response), 200
 
-
     @cors
     def options(self, movie_slug):
         request.headers.get('Access-Control-Request-Method')
@@ -54,7 +52,6 @@ class MovieAPI(Resource):
         self.arguments = { 'name': str, 'genre': str, 'director': str, 'imdb_score': str,
                            '99popularity': str }
         self.add_arguments()
-
 
     def add_arguments(self):
         for field, field_type in self.arguments.items():
@@ -74,15 +71,9 @@ class MovieSearchAPI(Resource):
         response = Movies.search(query)
         return encode_response(response), 200
 
-class ActorAPI(Resource):
-    def get(self, actor_id):
-        response = Actors.get(actor_id)
-        return encode_response(response), 200
-
 api.add_resource(MovieAPI, '/api/{}/movie/<string:movie_slug>/'.format(VERSION))
 api.add_resource(MovieListAPI, '/api/{}/movies/'.format(VERSION))
 api.add_resource(MovieSearchAPI, '/api/{}/movies/search/<string:query>'.format(VERSION))
-api.add_resource(ActorAPI, '/api/{}/actor/<string:actor_id>'.format(VERSION))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
