@@ -44,7 +44,8 @@ class Movies():
         for token in tokens:
             movies = mongo.db.movies.find( { '$or' :
                                                            [
-                                                               {'name':token}, {'genre':token},
+                                                               {'name':token},
+                                                               {'genre':token},
                                                                {'director': token}
                                                            ]
             } )

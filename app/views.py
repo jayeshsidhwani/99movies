@@ -9,7 +9,6 @@ movies = Blueprint('movies', __name__, template_folder='templates')
 HOST = 'http://0.0.0.0:5001/api/v1'
 
 class Movies(MethodView):
-
     def login(self):
         return render_template('login.html',
                                title = 'Home')
@@ -30,11 +29,10 @@ class Movies(MethodView):
 
     def get(self):
         permissions = session
-        # import code; code.interact(local=locals())
         movies = get('{}/movies/'.format(HOST)).json()
 
 
-        return render_template('movies/all_movies.html',
+        return render_template('movies/movies.html',
                                title = 'Home',
                                permissions = permissions,
                                movies=movies)
@@ -47,7 +45,7 @@ class Movies(MethodView):
             movies = get('{}/movies/search/{}'.format(HOST, query))
             if movies:
                 movies = movies.json()
-                return render_template('movies/all_movies.html',
+                return render_template('movies/movies.html',
                                    title = 'Home',
                                    permissions = permissions,
                                    movies=movies)
@@ -94,15 +92,20 @@ class Movies(MethodView):
         return render_template('movies/add_movie.html',
                                title = 'Home')
 
+    def test(self):
+        return render_template("movies/test-ng.html",
+                               title = 'Home')
+
 
 # Register the urls
-movies.add_url_rule('/login/', view_func=Movies().login)
-movies.add_url_rule('/search/', view_func=Movies().search)
-movies.add_url_rule('/login/validate/', view_func=Movies().validate_login, methods=['POST'])
-movies.add_url_rule('/', view_func=Movies().get)
-movies.add_url_rule('/movies/', view_func=Movies.as_view('list'))
-movies.add_url_rule('/movies/<slug>', view_func=Movies().get_a_movie)
-movies.add_url_rule('/movies/delete/<slug>', view_func=Movies().delete_movie)
-movies.add_url_rule('/movies/edit/<slug>', view_func=Movies().edit_movie)
-movies.add_url_rule('/movies/save/', view_func=Movies().save_movie, methods=['POST'])
-movies.add_url_rule('/movies/add/', view_func=Movies().add_new_movie)
+# movies.add_url_rule('/login/', view_func=Movies().login)
+# movies.add_url_rule('/search/', view_func=Movies().search)
+# movies.add_url_rule('/login/validate/', view_func=Movies().validate_login, methods=['POST'])
+# movies.add_url_rule('/', view_func=Movies().get)
+# movies.add_url_rule('/movies/', view_func=Movies.as_view('list'))
+# movies.add_url_rule('/movies/<slug>', view_func=Movies().get_a_movie)
+# movies.add_url_rule('/movies/delete/<slug>', view_func=Movies().delete_movie)
+# movies.add_url_rule('/movies/edit/<slug>', view_func=Movies().edit_movie)
+# movies.add_url_rule('/movies/save/', view_func=Movies().save_movie, methods=['POST'])
+# movies.add_url_rule('/movies/add/', view_func=Movies().add_new_movie)
+# movies.add_url_rule('/test/', view_func=Movies().test)
