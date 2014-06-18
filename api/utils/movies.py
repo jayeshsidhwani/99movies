@@ -34,6 +34,7 @@ class Movies():
         Adds a new movie
 
         """
+        kwargs.pop('_id', None)
         kwargs = Movies.sanitize_insert_arguments(**kwargs)
         if Movies.can_add_movie(**kwargs):
             mongo.db.movies.insert( kwargs )
@@ -53,6 +54,7 @@ class Movies():
 
     @staticmethod
     def update(movie_slug, token, **args):
+        args.pop('_id', None)
         allowed = Movies.can_edit_movie(token, type='edit')
 
         if allowed:

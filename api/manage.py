@@ -29,6 +29,7 @@ class MovieAPI(Resource):
     @cors
     def delete(self, movie_slug):
         token = request.query_string
+        # cleanup of token until you send header data in DELETE from ng
         token = token.split('=')[-1].replace('%22', '')
 
         response = Movies.delete(movie_slug, token)
@@ -40,16 +41,14 @@ class MovieAPI(Resource):
     @cors
     def put(self, movie_slug):
         data = ast.literal_eval(request.data)['data']
-        data.pop('_id', None)
         response = Movies.add(**data)
         return encode_response(response), 200
 
     @cors
     def post(self, movie_slug):
-        data = ast.literal_eval(request.data)['data']
-        token = ast.literal_eval(request.data)['token']
+        request_data = ast.literal_eval(request.data)
+        data, token = request_data['data'], request_data['token']
 
-        data.pop('_id', None)
         response = Movies.update(movie_slug, token, **data)
         if response['success']:
             return encode_response(response), 200
@@ -102,4 +101,4 @@ api.add_resource(MovieSearchAPI, '/api/{}/movies/search/<string:query>'.format(V
 api.add_resource(TokenAPI, '/api/{}/login/'.format(VERSION))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5001)
